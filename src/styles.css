@@ -1,3 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-angular: #dd0031;
+  --color-angular-dark: #c3002f;
+  --color-angular-light: #ff4081;
+  --color-primary: #7b1fa2;
+  --color-primary-dark: #4a0072;
+  --color-primary-light: #ae52d4;
+  --color-surface: #faf5ff;
+  --color-surface-card: #ffffff;
+  --color-border: #e9d5ff;
+  --color-text: #1e1b4b;
+  --color-text-muted: #6b7280;
+  --color-accent: #7c3aed;
+  --color-accent-light: #a78bfa;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,78 @@
+<section class="bg-surface-card rounded-2xl shadow-sm border border-border p-6 mb-8">
+  <h2 class="text-xl font-semibold text-primary-dark mb-5 flex items-center gap-2 justify-center">
+    Criar Nova Enquete
+  </h2>
+
+  <input
+    type="text"
+    placeholder="Título"
+    [(ngModel)]="novoTitulo"
+    class="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition mb-4"
+  >
+
+  <select
+    [(ngModel)]="novoTipo"
+    class="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition mb-4 appearance-none cursor-pointer"
+  >
+    <option value="duas-opcoes">Duelo (2 Opções)</option>
+    <option value="varias-opcoes">Múltiplas Opções</option>
+  </select>
+
+  <div class="flex gap-2 mb-3">
+    <input
+      type="text"
+      placeholder="Digite uma opção"
+      [(ngModel)]="novaOpcaoTexto"
+      class="flex-1 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition"
+    >
+    <button
+      (click)="adicionarOpcaoRascunho()"
+      class="rounded-lg bg-accent/10 text-accent font-medium px-4 py-2.5 text-sm hover:bg-accent/20 active:bg-accent/30 transition cursor-pointer"
+    >
+      + Adicionar
+    </button>
+  </div>
+
+  @if (opcoesTemporarias.length > 0) {
+    <ul class="space-y-1.5 mb-4">
+      @for (opcao of opcoesTemporarias; track opcao.texto) {
+        <li class="flex items-center gap-2 text-sm text-text bg-accent/5 rounded-lg px-3 py-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent inline-block"></span>
+          {{ opcao.texto }}
+        </li>
+      }
+    </ul>
+  }
+
+  <button
+    (click)="criarEnquete()"
+    class="w-full rounded-lg bg-gradient-to-r from-primary to-accent text-white font-semibold px-6 py-3 text-sm hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+  >
+    Publicar
+  </button>
+</section>
+
+<div class="flex items-center gap-3 mb-8">
+  <div class="flex-1 h-px bg-border"></div>
+  <span class="text-xs text-text-muted font-medium uppercase tracking-wider">Enquetes</span>
+  <div class="flex-1 h-px bg-border"></div>
+</div>
+
+<div class="space-y-5">
+  @for (enquete of enquetes; track enquete.id) {
+    <app-card-component [dataCriacao]="enquete.id">
+      <span titulo>{{ enquete.titulo | uppercase }}</span>
+
+      <app-vote-component
+        [opcoes]="enquete.opcoes"
+        [tipoEnquete]="enquete.tipo"
+        (votoEmitido)="processarVoto(enquete.id, $event)">
+      </app-vote-component>
+    </app-card-component>
+  } @empty {
+    <div class="text-center py-16">
+      <div class="text-5xl mb-3">🗳️</div>
+      <p class="text-text-muted text-sm">Nenhuma enquete criada ainda.</p>
+    </div>
+  }
+</div>
