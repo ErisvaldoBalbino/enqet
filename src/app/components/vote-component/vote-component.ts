@@ -15,6 +15,19 @@ export class VoteComponent {
 
   opcaoSelecionada: string = '';
 
+  get totalVotos(): number {
+    return this.opcoes.reduce((sum: number, o: any) => sum + o.votos, 0);
+  }
+
+  porcentagem(votos: number): number {
+    if (this.totalVotos === 0) return this.tipoEnquete === 'duas-opcoes' ? 50 : 0;
+    return Math.round((votos / this.totalVotos) * 100);
+  }
+
+  get maxVotos(): number {
+    return Math.max(...this.opcoes.map((o: any) => o.votos));
+  }
+
   votar(opcaoTexto: string) {
       this.votoEmitido.emit(opcaoTexto);
   }

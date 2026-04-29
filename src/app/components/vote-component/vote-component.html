@@ -1,45 +1,80 @@
 @if (tipoEnquete === 'duas-opcoes') {
 
-  <div class="flex gap-3">
-    @for (opcao of opcoes; track opcao.texto) {
+  <div class="flex gap-3 mb-4">
+    @for (opcao of opcoes; track opcao.texto; let i = $index) {
       <button
         (click)="votar(opcao.texto)"
-        class="flex-1 group rounded-xl border-2 border-accent/20 bg-accent/5 px-4 py-4 text-center transition-all hover:border-accent hover:bg-accent/10 hover:shadow-sm active:scale-[0.97] cursor-pointer"
+        class="flex-1 group rounded-xl border-2 px-4 py-4 text-center transition-all hover:shadow-sm active:scale-[0.97] cursor-pointer"
+        [class]="i === 0
+          ? 'border-primary/20 bg-primary/5 hover:border-primary hover:bg-primary/10'
+          : 'border-angular/20 bg-angular/5 hover:border-angular hover:bg-angular/10'"
       >
-        <span class="block text-sm font-medium text-text group-hover:text-accent transition-colors">{{ opcao.texto }}</span>
-        <span class="block mt-1.5 text-xs font-semibold text-accent">{{ opcao.votos }} votos</span>
+        <span
+          class="block text-sm font-medium transition-colors"
+          [class]="i === 0 ? 'text-text group-hover:text-primary' : 'text-text group-hover:text-angular'"
+        >{{ opcao.texto }}</span>
+        <span
+          class="block mt-1.5 text-xs font-semibold"
+          [class]="i === 0 ? 'text-primary' : 'text-angular'"
+        >{{ opcao.votos }} votos</span>
       </button>
     }
   </div>
+
+  @if (opcoes.length === 2) {
+    <div class="flex items-center gap-2 text-xs font-semibold mb-1.5">
+      <span class="text-primary">{{ porcentagem(opcoes[0].votos) }}%</span>
+      <span class="flex-1"></span>
+      <span class="text-angular">{{ porcentagem(opcoes[1].votos) }}%</span>
+    </div>
+
+    <div class="w-full h-3 rounded-full overflow-hidden flex bg-gray-200">
+      <div
+        class="bg-gradient-to-r from-primary to-primary-light transition-all duration-500 ease-out rounded-l-full"
+        [style.width.%]="porcentagem(opcoes[0].votos)"
+      ></div>
+      <div
+        class="bg-gradient-to-l from-angular to-angular-light transition-all duration-500 ease-out rounded-r-full"
+        [style.width.%]="porcentagem(opcoes[1].votos)"
+      ></div>
+    </div>
+
+    <div class="flex items-center gap-2 text-[11px] text-text-muted mt-1.5">
+      <span>{{ opcoes[0].votos }} votos</span>
+      <span class="flex-1 text-center">{{ totalVotos }} total</span>
+      <span>{{ opcoes[1].votos }} votos</span>
+    </div>
+  }
 
 } @else {
 
   <div class="space-y-2">
     @for (opcao of opcoes; track opcao.texto) {
-      <label
-        class="flex items-center gap-3 rounded-lg border border-border px-4 py-3 cursor-pointer transition-all hover:border-accent/40 hover:bg-accent/5"
-        [class.border-accent]="opcaoSelecionada === opcao.texto"
-        [class.bg-accent/5]="opcaoSelecionada === opcao.texto"
+      <button
+        (click)="votar(opcao.texto)"
+        class="relative w-full rounded-lg overflow-hidden border border-border text-left cursor-pointer transition-all hover:border-accent/50 active:scale-[0.99] bg-surface-card"
+        [class.border-accent]="opcao.votos === maxVotos && totalVotos > 0"
       >
-        <input
-          type="radio"
-          name="votoMultiplo"
-          [value]="opcao.texto"
-          [(ngModel)]="opcaoSelecionada"
-          class="accent-accent w-4 h-4"
-        >
-        <span class="flex-1 text-sm text-text">{{ opcao.texto }}</span>
-        <span class="text-xs font-medium text-text-muted bg-surface rounded-full px-2.5 py-0.5">{{ opcao.votos }} votos</span>
-      </label>
+        <div
+          class="absolute inset-0 rounded-lg transition-all duration-500 ease-out"
+          [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'bg-accent/15' : 'bg-accent/8'"
+          [style.width.%]="porcentagem(opcao.votos)"
+        ></div>
+
+        <div class="relative flex items-center px-4 py-3">
+          <span
+            class="flex-1 text-sm"
+            [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'font-semibold text-text' : 'font-medium text-text'"
+          >{{ opcao.texto }}</span>
+          <span
+            class="text-sm ml-3 tabular-nums"
+            [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'font-bold text-accent' : 'font-medium text-text-muted'"
+          >{{ porcentagem(opcao.votos) }}%</span>
+        </div>
+      </button>
     }
 
-    <button
-      (click)="votarMultiplo()"
-      [disabled]="!opcaoSelecionada"
-      class="mt-3 w-full rounded-lg bg-accent text-white font-medium px-4 py-2.5 text-sm transition-all cursor-pointer hover:bg-accent/90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
-    >
-      Confirmar Voto
-    </button>
+    <p class="text-[11px] text-text-muted mt-1 text-right">{{ totalVotos }} votos</p>
   </div>
 
 }
