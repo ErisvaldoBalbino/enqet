@@ -1,7 +1,7 @@
-@if (tipoEnquete === 'duas-opcoes') {
+@if (tipoEnquete() === 'duas-opcoes') {
 
   <div class="flex gap-3 mb-4">
-    @for (opcao of opcoes; track opcao.texto; let i = $index) {
+    @for (opcao of opcoes(); track opcao.texto; let i = $index) {
       <button
         (click)="votar(opcao.texto)"
         class="flex-1 group rounded-xl border-2 px-4 py-4 text-center transition-all hover:shadow-sm active:scale-[0.97] cursor-pointer"
@@ -21,35 +21,35 @@
     }
   </div>
 
-  @if (opcoes.length === 2) {
+  @if (opcoes().length === 2) {
     <div class="flex items-center gap-2 text-xs font-semibold mb-1.5">
-      <span class="text-primary">{{ porcentagem(opcoes[0].votos) }}%</span>
+      <span class="text-primary">{{ porcentagem(opcoes()[0].votos) }}%</span>
       <span class="flex-1"></span>
-      <span class="text-angular">{{ porcentagem(opcoes[1].votos) }}%</span>
+      <span class="text-angular">{{ porcentagem(opcoes()[1].votos) }}%</span>
     </div>
 
     <div class="w-full h-3 rounded-full overflow-hidden flex bg-gray-200">
       <div
-        class="bg-gradient-to-r from-primary to-primary-light transition-all duration-500 ease-out rounded-l-full"
-        [style.width.%]="porcentagem(opcoes[0].votos)"
+        class="bg-linear-to-r from-primary to-primary-light transition-all duration-500 ease-out rounded-l-full"
+        [style.width.%]="porcentagem(opcoes()[0].votos)"
       ></div>
       <div
-        class="bg-gradient-to-l from-angular to-angular-light transition-all duration-500 ease-out rounded-r-full"
-        [style.width.%]="porcentagem(opcoes[1].votos)"
+        class="bg-linear-to-l from-angular to-angular-light transition-all duration-500 ease-out rounded-r-full"
+        [style.width.%]="porcentagem(opcoes()[1].votos)"
       ></div>
     </div>
 
     <div class="flex items-center gap-2 text-[11px] text-text-muted mt-1.5">
-      <span>{{ opcoes[0].votos }} votos</span>
+      <span>{{ opcoes()[0].votos }} votos</span>
       <span class="flex-1 text-center">{{ totalVotos }} total</span>
-      <span>{{ opcoes[1].votos }} votos</span>
+      <span>{{ opcoes()[1].votos }} votos</span>
     </div>
   }
 
 } @else {
 
   <div class="space-y-2">
-    @for (opcao of opcoes; track opcao.texto) {
+    @for (opcao of opcoes(); track opcao.texto) {
       <button
         (click)="votar(opcao.texto)"
         class="relative w-full rounded-lg overflow-hidden border border-border text-left cursor-pointer transition-all hover:border-accent/50 active:scale-[0.99] bg-surface-card"
@@ -57,14 +57,14 @@
       >
         <div
           class="absolute inset-0 rounded-lg transition-all duration-500 ease-out"
-          [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'bg-accent/15' : 'bg-accent/8'"
+          [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'bg-linear-to-r from-accent/10 to-angular/15' : 'bg-accent/8'"
           [style.width.%]="porcentagem(opcao.votos)"
         ></div>
 
         <div class="relative flex items-center px-4 py-3">
           <span
             class="flex-1 text-sm"
-            [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'font-semibold text-text' : 'font-medium text-text'"
+            [class]="opcao.votos === maxVotos && totalVotos > 0 ? 'font-semibold text-primary' : 'font-medium text-text'"
           >{{ opcao.texto }}</span>
           <span
             class="text-sm ml-3 tabular-nums"

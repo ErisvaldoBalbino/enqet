@@ -8,5 +8,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './card-component.css',
 })
 export class CardComponent {
+  titulo = input<string>();
+  descricao = input<string>();
   dataCriacao = input<number>(Date.now());
 }

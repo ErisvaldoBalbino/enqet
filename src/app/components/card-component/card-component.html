@@ -1,10 +1,13 @@
-<div class="bg-surface-card rounded-2xl shadow-sm border border-border overflow-hidden transition-shadow hover:shadow-md">
+<div class="mt-5 bg-surface-card rounded-2xl shadow-sm border border-border overflow-hidden transition-shadow hover:shadow-md">
   <div class="px-5 pt-5 pb-3 border-b border-border/60">
     <h3 class="text-lg font-semibold text-primary-dark m-0 leading-tight">
-      <ng-content select="[titulo]"></ng-content>
+      {{ titulo() }}
     </h3>
-    <p class="text-xs text-text-muted mt-1">
-      Criado em: {{ dataCriacao() | date:'dd/MM/yyyy HH:mm' }}
+    <p class="text-sm text-text-muted mt-2">
+      {{ descricao() }}
+    </p>
+    <p class="text-xs text-text-muted mt-2">
+      Criada em {{ dataCriacao() | date:'dd/MM/yyyy HH:mm' }}
     </p>
   </div>
 

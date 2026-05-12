@@ -1,14 +1,17 @@
 <section class="bg-surface-card rounded-2xl shadow-sm border border-border p-6 mb-8">
-  <h2 class="text-xl font-semibold text-primary-dark mb-5 flex items-center gap-2 justify-center">
-    Criar Nova Enquete
-  </h2>
-
   <input
     type="text"
     placeholder="Título"
     [(ngModel)]="novoTitulo"
     class="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition mb-4"
   >
+
+  <textarea
+    placeholder="Descrição (opcional)"
+    [(ngModel)]="novaDescricao"
+    rows="2"
+    class="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition mb-4 resize-none"
+  ></textarea>
 
   <select
     [(ngModel)]="novoTipo"
@@ -46,7 +49,7 @@
 
   <button
     (click)="criarEnquete()"
-    class="w-full rounded-lg bg-gradient-to-r from-primary to-accent text-white font-semibold px-6 py-3 text-sm hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+    class="w-full rounded-lg bg-linear-to-r from-primary to-accent text-white font-semibold px-6 py-3 text-sm hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
   >
     Publicar
   </button>
@@ -60,9 +63,7 @@
 
 <div class="space-y-5">
   @for (enquete of enquetes; track enquete.id) {
-    <app-card-component [dataCriacao]="enquete.id">
-      <span titulo>{{ enquete.titulo | uppercase }}</span>
-
+    <app-card-component [dataCriacao]="enquete.id" [titulo]="enquete.titulo" [descricao]="enquete.descricao | descricao">
       <app-vote-component
         [opcoes]="enquete.opcoes"
         [tipoEnquete]="enquete.tipo"
