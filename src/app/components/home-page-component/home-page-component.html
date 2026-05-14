@@ -30,16 +30,19 @@
     >
     <button
       (click)="adicionarOpcaoRascunho()"
-      class="rounded-lg bg-accent/10 text-accent font-medium px-4 py-2.5 text-sm hover:bg-accent/20 active:bg-accent/30 transition cursor-pointer"
-    >
+      class="rounded-lg bg-accent/10 text-accent font-medium px-4 py-2.5 text-sm hover:bg-accent/20 active:bg-accent/30"
+      [class]="novoTipo === 'duas-opcoes' && opcoesTemporarias.length >= 2 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'"
+      [disabled]="novaOpcaoTexto.trim() === '' || (novoTipo === 'duas-opcoes' && opcoesTemporarias.length >= 2)"
+      >
       + Adicionar
     </button>
   </div>
 
   @if (opcoesTemporarias.length > 0) {
     <ul class="space-y-1.5 mb-4">
+    <span class="text-xs text-text-muted font-medium uppercase justify-self-center">Opções</span>
       @for (opcao of opcoesTemporarias; track opcao.texto) {
-        <li class="flex items-center gap-2 text-sm text-text bg-accent/5 rounded-lg px-3 py-2">
+        <li class="flex items-center gap-2 text-sm text-text bg-accent/5 rounded-lg px-3 py-2 mt-2">
           <span class="w-1.5 h-1.5 rounded-full bg-accent inline-block"></span>
           {{ opcao.texto }}
         </li>
@@ -49,7 +52,7 @@
 
   <button
     (click)="criarEnquete()"
-    class="w-full rounded-lg bg-linear-to-r from-primary to-accent text-white font-semibold px-6 py-3 text-sm hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+    class="w-full rounded-lg bg-accent text-white font-semibold px-6 py-3 text-sm hover:opacity-90 active:bg-accent/80  cursor-pointer"
   >
     Publicar
   </button>
@@ -62,7 +65,7 @@
 </div>
 
 <div class="space-y-5">
-  @for (enquete of enquetes; track enquete.id) {
+  @for (enquete of enquetes(); track enquete.id) {
     <app-card-component [dataCriacao]="enquete.id" [titulo]="enquete.titulo" [descricao]="enquete.descricao | descricao">
       <app-vote-component
         [opcoes]="enquete.opcoes"
