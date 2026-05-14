@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { HomePageComponent } from "./components/home-page-component/home-page-component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [HomePageComponent]
+  imports: [RouterOutlet]
 })
 export class App {
   protected readonly title = signal('sistema-enquetes');
