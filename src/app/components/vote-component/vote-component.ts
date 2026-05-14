@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   templateUrl: './vote-component.html',
   styleUrl: './vote-component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VoteComponent {
   opcoes = input<any>([]);
@@ -24,7 +23,7 @@ export class VoteComponent {
     if (this.totalVotos() === 0) {
       return this.tipoEnquete() === 'duas-opcoes' ? 50 : 0;
     }
-    
+
     return Math.round((votos / this.totalVotos()) * 100);
   }
 
