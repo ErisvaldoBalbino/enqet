@@ -19,29 +19,27 @@
     }
   </div>
 
-  @if (opcoes().length === 2) {
-    <div class="flex items-center gap-2 text-xs font-semibold mb-1.5">
-      <span class="text-primary">{{ porcentagem(opcoes()[0].votos) }}%</span>
-      <span class="flex-1"></span>
-      <span class="text-angular">{{ porcentagem(opcoes()[1].votos) }}%</span>
-    </div>
+  <div class="flex items-center gap-2 text-xs font-semibold mb-1.5">
+    <span class="text-primary">{{ porcentagem(opcoes()[0].votos) }}%</span>
+    <span class="flex-1"></span>
+    <span class="text-angular">{{ porcentagem(opcoes()[1].votos) }}%</span>
+  </div>
 
-    <div class="w-full h-3 rounded-full overflow-hidden flex bg-gray-200">
-      <div
-        class="bg-linear-to-r from-primary to-primary-light transition-all duration-500 ease-out rounded-l-full"
-        [style.width.%]="porcentagem(opcoes()[0].votos)"
-      ></div>
-      <div
-        class="bg-linear-to-l from-angular to-angular-light transition-all duration-500 ease-out rounded-r-full"
-        [style.width.%]="porcentagem(opcoes()[1].votos)"
-      ></div>
-    </div>
+  <div class="w-full h-3 rounded-full overflow-hidden flex bg-gray-200">
+    <div
+      class="bg-linear-to-r from-primary to-primary-light transition-all duration-500 ease-out rounded-l-full"
+      [style.width.%]="porcentagem(opcoes()[0].votos)"
+    ></div>
+    <div
+      class="bg-linear-to-l from-angular to-angular-light transition-all duration-500 ease-out rounded-r-full"
+      [style.width.%]="porcentagem(opcoes()[1].votos)"
+    ></div>
+  </div>
 
-    <div class="flex items-center gap-2 text-[11px] text-text-muted mt-1.5">
-      <span class="flex-1 text-center">{{ totalVotos() }} total</span>
-    </div>
-  }
-
+  <div class="flex items-center gap-2 text-[11px] text-text-muted mt-1.5">
+    <span class="flex-1 text-center">{{ totalVotos() }} total</span>
+  </div>
+  
 } @else {
 
   <div class="space-y-2">
